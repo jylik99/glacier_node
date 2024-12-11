@@ -108,7 +108,7 @@ install_node() {
     # Install Watchtower
     echo -e "${GREEN}Installing Watchtower for automatic updates...${NC}"
     docker run -d \
-        --name watchtower \
+        --name glacier-watchtower \
         -v /var/run/docker.sock:/var/run/docker.sock \
         containrrr/watchtower \
         --interval 3600 \
