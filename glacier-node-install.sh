@@ -133,9 +133,9 @@ show_logs() {
 
 # Function to show Watchtower logs
 show_watchtower_logs() {
-    if docker ps -q -f name=watchtower >/dev/null; then
+    if docker ps -q -f name=glacier-watchtower >/dev/null; then
         echo -e "${GREEN}Showing Watchtower logs (Ctrl+C to exit):${NC}"
-        docker logs -f watchtower
+        docker logs -f glacier-watchtower
     else
         echo -e "${RED}Watchtower is not running!${NC}"
         read -p "Press Enter to return to menu..."
@@ -147,10 +147,10 @@ remove_node() {
     echo -e "${YELLOW}Removing Glacier node components...${NC}"
     
     # Stop and remove containers
-    if docker ps -a -q -f name=watchtower >/dev/null; then
+    if docker ps -a -q -f name=glacier-watchtower >/dev/null; then
         echo "Stopping and removing Watchtower container..."
-        docker stop watchtower
-        docker rm -f watchtower
+        docker stop glacier-watchtower
+        docker rm -f glacier-watchtower
     fi
     
     if docker ps -a -q -f name=glacier-verifier >/dev/null; then
@@ -167,7 +167,7 @@ remove_node() {
     # Clean up container directories
     echo "Cleaning up container directories..."
     sudo rm -rf /var/lib/docker/containers/*glacier-verifier* 2>/dev/null
-    sudo rm -rf /var/lib/docker/containers/*watchtower* 2>/dev/null
+    sudo rm -rf /var/lib/docker/containers/*glacier-watchtower* 2>/dev/null
     
     echo -e "${GREEN}Node removal completed${NC}"
     read -p "Press Enter to return to menu..."
@@ -188,9 +188,9 @@ check_status() {
     echo ""
     
     # Check Watchtower
-    if docker ps -q -f name=watchtower >/dev/null; then
+    if docker ps -q -f name=glacier-watchtower >/dev/null; then
         echo -e "Watchtower: ${GREEN}Running${NC}"
-        docker ps -f name=watchtower --format "ID: {{.ID}}\nStatus: {{.Status}}\nCreated: {{.CreatedAt}}"
+        docker ps -f name=glacier-watchtower --format "ID: {{.ID}}\nStatus: {{.Status}}\nCreated: {{.CreatedAt}}"
     else
         echo -e "Watchtower: ${RED}Not running${NC}"
     fi
